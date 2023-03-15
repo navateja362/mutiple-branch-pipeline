@@ -1,0 +1,37 @@
+pipeline{
+    agent any
+    stages{
+        stage("sample pipeline"){
+        steps{
+            echo "hello pipeline"
+        }
+        }
+    }
+}
+
+
+git branch: 'main', url: 'https://github.com/navateja362/newrepo.git'
+
+
+/opt/maven3.9
+
+
+pipeline{
+    agent any
+    environment{
+        PATH = "/opt/maven3.9/bin:$PATH"
+    }
+    stages{
+        stage("git clone"){
+            steps{
+                git credentialsId: 'gitssh_key', url: 'https://github.com/AWS-123/hello-world.git'
+            }
+        }
+        
+         stage("mvn build"){
+            steps{
+                sh 'mvn -v'
+            }
+        }
+    }
+}
